@@ -5,9 +5,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.inkflow.backend.DTO.UserCreationRequest;
+import com.inkflow.backend.DTO.UserDetailsResponse;
 import com.inkflow.backend.entity.User;
 import com.inkflow.backend.entity.UserRepository;
 import com.inkflow.backend.error.DomainException.ResourceNotFound;
+
+import jakarta.transaction.Transactional;
 
 /**
  * UserService
@@ -23,6 +26,7 @@ public class UserServiceImpl implements UserService {
     this.passwordEncoder = passwordEncoder;
   }
 
+  @Transactional
   public User register(UserCreationRequest request) {
     User user = new User(request.firstName(), request.lastName(), request.email(),
         passwordEncoder.encode(request.password()));
@@ -39,9 +43,9 @@ public class UserServiceImpl implements UserService {
    * }
    */
 
-  public User getUser(UserDetails userDetails) {
+  public UserDetailsResponse getUser(UserDetails userDetails) {
     String email = userDetails.getUsername();
     User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFound("User not found"));
-    return user;
+    return new UserDetailsResponse(email, user.getFirstName(), user.getLastName());
   }
 }

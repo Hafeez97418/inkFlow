@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inkflow.backend.DTO.UserCreationRequest;
-import com.inkflow.backend.entity.User;
+import com.inkflow.backend.DTO.UserDetailsResponse;
 import com.inkflow.backend.service.UserService;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,9 +59,8 @@ public class UserController {
    */
 
   @GetMapping("/user")
-  public ApiResponse<User> getUser(@AuthenticationPrincipal UserDetails userDetails) {
-    User user = userService.getUser(userDetails);
-    return ApiResponse.success(user, "user fetched");
+  public ApiResponse<UserDetailsResponse> getUser(@AuthenticationPrincipal UserDetails userDetails) {
+    return ApiResponse.success(userService.getUser(userDetails), "user fetched");
   }
 
 }

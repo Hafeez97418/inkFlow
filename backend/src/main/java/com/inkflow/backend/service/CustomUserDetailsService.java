@@ -25,7 +25,11 @@ public class CustomUserDetailsService implements UserDetailsService {
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     com.inkflow.backend.entity.User user = userRepository.findByEmail(email)
         .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    return User.withUsername(user.getEmail())
+
+    return
+    // NOTE: the User mentioned below is from userDetails class not an specified
+    // entity
+    User.withUsername(user.getEmail())
         .password(user.getPassword())
         .roles("USER")
         .build();

@@ -3,6 +3,8 @@ package com.inkflow.backend.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Blog")
 public class Blog {
@@ -29,6 +31,7 @@ public class Blog {
   private LocalDateTime updatedAt;
 
   // Many-to-one relationship back to User
+  @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
@@ -46,6 +49,13 @@ public class Blog {
 
   // Constructors, Getters, and Setters
   public Blog() {
+  }
+
+  public Blog(String title, String content, Boolean published, User user) {
+    this.title = title;
+    this.content = content;
+    this.published = published;
+    this.user = user;
   }
 
   public Long getBlogId() {

@@ -50,7 +50,7 @@ public class GlobalExceptionalHandler {
         HttpStatus.UNAUTHORIZED.getReasonPhrase(),
         ex.getMessage(),
         request.getDescription(false).replace("uri=", ""));
-    return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
   }
 
   // 2. Handle Custom BadRequestException (400 Bad Request)

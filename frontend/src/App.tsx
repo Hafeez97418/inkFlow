@@ -1,9 +1,14 @@
 import './App.css'
+import ButtonUsage from './ButtonUsage'
 
 function App() {
 
   return (
-    <div></div>
+    <div>
+
+      {/* NOTE: this is just for the example */}
+      <ButtonUsage />
+    </div>
   )
 }
 
